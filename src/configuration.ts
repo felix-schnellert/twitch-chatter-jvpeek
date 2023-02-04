@@ -3,7 +3,7 @@ import * as joi from 'joi';
 require('dotenv').config();
 
 interface IConfiguration {
-    account_credentials: Array<IAccountCredentialsConfiguration>;
+    accountCredentials: Array<IAccountCredentialsConfiguration>;
     channels: Array<string>;
 };
 
@@ -13,17 +13,17 @@ interface IAccountCredentialsConfiguration {
 };
 
 const parse = (): IConfiguration => {
-    const account_credentials: 
+    const accountCredentials: 
         Array<IAccountCredentialsConfiguration> = JSON.parse(process.env.BOTS_CREDENTIALS);
     const channels: 
         Array<string> = JSON.parse(process.env.TARGET_CHANNELS);
 
-    if (!account_credentials || !channels) {
+    if (!accountCredentials || !channels) {
         throw new Error('Accounts or Channels section in .env is not defined!');
     }
 
     const configuration: IConfiguration = {
-        account_credentials: account_credentials,
+        accountCredentials: accountCredentials,
         channels: channels,
     };
 
@@ -40,7 +40,7 @@ const validateConfiguration = (
     configuration: IConfiguration
 ): boolean => {
     const credentials: Array<IAccountCredentialsConfiguration> = 
-        configuration.account_credentials;
+        configuration.accountCredentials;
     
     return credentials.every((credentials) => {
         const validationResult = joi.object({
